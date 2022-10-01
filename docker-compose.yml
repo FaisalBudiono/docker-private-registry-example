@@ -6,6 +6,12 @@ services:
         container_name: registry-docker
         environment:
             REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+            REGISTRY_STORAGE_MAINTENANCE: |-
+                uploadpurging:
+                    enabled: true
+                    age: 168h
+                    interval: 24h
+                    dryrun: false
         volumes:
             - ./storage/registry:/data
         networks:
