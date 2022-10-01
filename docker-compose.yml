@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+    registry:
+        image: registry:2
+        container_name: registry-docker
+        environment:
+            REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+        volumes:
+            - ./storage/registry:/data
+        networks:
+            - docker-registry
+
+    nginx:
+        build:
+            context: ./nginx
+        container_name: registry-nginx
+        ports:
+            - "5000:5000"
+        volumes:
+            - ./auth:/auth
+        networks:
+            - docker-registry
+
+networks:
+    docker-registry:
+        name: docker-registry
+        driver: bridge
