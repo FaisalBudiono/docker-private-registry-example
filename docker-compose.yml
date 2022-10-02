@@ -4,6 +4,7 @@ services:
     registry:
         image: registry:2
         container_name: registry-docker
+        restart: always
         environment:
             REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
             REGISTRY_STORAGE_MAINTENANCE: |-
@@ -21,6 +22,7 @@ services:
         build:
             context: ./nginx
         container_name: registry-nginx
+        restart: always
         ports:
             - "5000:5000"
         volumes:
