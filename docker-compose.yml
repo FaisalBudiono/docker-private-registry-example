@@ -7,6 +7,7 @@ services:
         container_name: registry-docker
         restart: always
         environment:
+            REGISTRY_HTTP_HOST: ${REGISTRY_URL}
             REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
             REGISTRY_STORAGE_MAINTENANCE: |-
                 uploadpurging:
