@@ -1,11 +1,20 @@
-version: '3.3'
+version: '3.8'
+name: private-registry
 
 services:
     registry:
         image: registry:2
         container_name: registry-docker
+        restart: always
         environment:
+            REGISTRY_HTTP_HOST: ${REGISTRY_URL}
             REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY: /data
+            REGISTRY_STORAGE_MAINTENANCE: |-
+                uploadpurging:
+                    enabled: true
+                    age: 168h
+                    interval: 24h
+                    dryrun: false
         volumes:
             - ./storage/registry:/data
         networks:
@@ -15,6 +24,7 @@ services:
         build:
             context: ./nginx
         container_name: registry-nginx
+        restart: always
         ports:
             - "5000:5000"
         volumes:
